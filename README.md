@@ -1,4 +1,6 @@
 # EX-NO-9-RSA-Algorithm
+### NAME: KIRUTIKA K R
+### REG NO: 212224230128
 
 ## AIM:
 To Implement RSA Encryption Algorithm in Cryptography
@@ -36,12 +38,89 @@ Step 5: **Security Foundation
 The security of RSA relies on the difficulty of factoring large numbers; thus, choosing sufficiently large prime numbers for \( p \) and \( q \) is crucial for security.
 
 ## Program:
-
-
-
+```
+#include <stdio.h> 
+long long powerMod(long long base, long long exp, long long mod) 
+{ 
+    long long result = 1; 
+ 
+    while (exp > 0) 
+    { 
+        result = (result * base) % mod; 
+        exp--; 
+    } 
+ 
+    return result; 
+} 
+ 
+int gcd(int a, int b) 
+{ 
+    while (b != 0) 
+    { 
+        int temp = b; 
+        b = a % b; 
+        a = temp; 
+    } 
+    return a; 
+} 
+ 
+int modInverse(int e, int phi) 
+{ 
+    int d; 
+ 
+    for (d = 1; d < phi; d++) 
+    { 
+        if ((e * d) % phi == 1) 
+            return d; 
+    } 
+ 
+    return -1; 
+} 
+ 
+int main() 
+{ 
+    int p, q, n, phi, e, d; 
+    long long message, encrypted, decrypted; 
+ 
+    printf("Enter two prime numbers (p and q): "); 
+    scanf("%d %d", &p, &q); 
+     
+    n = p * q; 
+     
+    phi = (p - 1) * (q - 1); 
+     
+    for (e = 2; e < phi; e++) 
+    { 
+        if (gcd(e, phi) == 1) 
+            break; 
+    } 
+     
+    d = modInverse(e, phi); 
+ 
+    printf("\nRSA Key Generation"); 
+    printf("\n------------------"); 
+    printf("\nn = %d", n); 
+    printf("\nPhi(n) = %d", phi); 
+    printf("\nPublic Key  = (%d, %d)", e, n); 
+    printf("\nPrivate Key = (%d, %d)", d, n); 
+     
+    printf("\n\nEnter message as a number (less than %d): ", n); 
+    scanf("%lld", &message); 
+     
+    encrypted = powerMod(message, e, n); 
+ 
+    printf("\nEncrypted message = %lld", encrypted); 
+     
+    decrypted = powerMod(encrypted, d, n); 
+ 
+    printf("\nDecrypted message = %lld", decrypted); 
+    return 0; 
+}
+```
 
 ## Output:
 
+<img width="565" height="425" alt="image" src="https://github.com/user-attachments/assets/43aba7a5-c17d-4cd3-b189-b09679b56fbf" />
 
 
 ## Result:
